@@ -17,7 +17,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update        # crea/actualiza tablas automáticamente
+      ddl-auto: update        # crea y actualiza tablas automáticamente
     show-sql: false
     properties:
       hibernate:
@@ -27,14 +27,14 @@ spring:
 
   sql:
     init:
-      mode: always            # ejecuta data.sql al arrancar
+      mode: always            # ejecuta data.sql que es toda la data 
       data-locations: classpath:data.sql
 
-# URL del MS1 para validar tokens y usuarios
+# URL del MS1 para validar tokens
 ms1:
   url: ${MS1_URL:http://localhost:3001}
 
-# OpenAPI / Swagger
+# OpenAPI y Swagger
 springdoc:
   api-docs:
     path: /api-docs
@@ -44,7 +44,6 @@ springdoc:
     tagsSorter: alpha
     display-request-duration: true
 
-# Logging
 logging:
   level:
     pe.utec.academic: INFO
