@@ -8,21 +8,23 @@ import java.util.Optional;
 
 public interface ProfesorCursoRepository extends JpaRepository<ProfesorCurso, Integer> {
 
-    // Lista de todos los profesores de un curso
+    // Todos los profesores de un curso (activos)
     List<ProfesorCurso> findByCursoIdAndActivoTrue(Integer cursoId);
 
-    // Lista de todos los cursos de un profesor
+    // Todos los cursos de un profesor (activos)
     List<ProfesorCurso> findByProfesorIdAndActivoTrue(String profesorId);
 
-    // Lista de todos los cursos de un profesor en un semestre
+    // Todos los cursos de un profesor en un semestre
     List<ProfesorCurso> findByProfesorIdAndSemestreAndActivoTrue(
         String profesorId, String semestre
     );
 
+    // Verificar duplicado antes de insertar
     boolean existsByProfesorIdAndCursoIdAndSemestre(
         String profesorId, Integer cursoId, String semestre
     );
-    
+
+    // Buscar uno específico (para validación externa: MS4 pregunta si existe)
     Optional<ProfesorCurso> findByIdAndActivoTrue(Integer id);
 
     @Query("""

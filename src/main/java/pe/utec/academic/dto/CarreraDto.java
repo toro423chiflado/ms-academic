@@ -4,6 +4,9 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import java.util.List;
 
+// ═══════════════════════════════════════════════════════════════
+// CARRERA
+// ═══════════════════════════════════════════════════════════════
 public class CarreraDto {
 
     @Data @Builder @NoArgsConstructor @AllArgsConstructor

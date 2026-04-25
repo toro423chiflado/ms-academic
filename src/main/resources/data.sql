@@ -1,15 +1,23 @@
+-- ================================================================
+-- UTEC Rate — data.sql COMPLETO Y OFICIAL
+-- Fuente: utec.edu.pe (2025) — 16 carreras reales + Cursos Generales
+-- INSERT IGNORE = seguro para re-ejecuciones sin duplicados
+-- ================================================================
 
 -- ╔══════════════════════════════════════════╗
 -- ║  1. CARRERAS (17 en total)              ║
 -- ╚══════════════════════════════════════════╝
 INSERT IGNORE INTO carrera (nombre, codigo, img_url, activa) VALUES
 ('Cursos Generales',                          'CG',   NULL, 1),
+-- Facultad de Computación
 ('Sistemas de Información',                   'SI',   NULL, 1),
 ('Ciencia de Datos e Inteligencia Artificial','CDIA', NULL, 1),
 ('Ciencia de la Computación',                 'CC',   NULL, 1),
 ('Ciberseguridad',                            'CS',   NULL, 1),
+-- Facultad de Negocios
 ('Administración y Negocios Digitales',       'AND',  NULL, 1),
 ('Business Analytics',                        'BA',   NULL, 1),
+-- Facultad de Ingeniería
 ('Ingeniería Industrial',                     'II',   NULL, 1),
 ('Bioingeniería',                             'BI',   NULL, 1),
 ('Ingeniería de la Energía',                  'IE',   NULL, 1),
@@ -19,7 +27,7 @@ INSERT IGNORE INTO carrera (nombre, codigo, img_url, activa) VALUES
 ('Ingeniería Civil',                          'IC',   NULL, 1),
 ('Ingeniería Electrónica',                    'IEL',  NULL, 1),
 ('Ingeniería Mecatrónica',                    'IMT',  NULL, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  2. CURSOS GENERALES                    ║
 -- ║  Compartidos por TODAS las carreras     ║
@@ -43,7 +51,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='CG'), 'Introducción a la Ingeniería',   'CG-IN101', '#F59E0B', 2, 1),
 ((SELECT id FROM carrera WHERE codigo='CG'), 'Taller de Proyectos I',          'CG-TP101', '#F97316', 2, 1),
 ((SELECT id FROM carrera WHERE codigo='CG'), 'Taller de Proyectos II',         'CG-TP102', '#F97316', 2, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  3. SISTEMAS DE INFORMACIÓN (SI)        ║
 -- ╚══════════════════════════════════════════╝
@@ -65,7 +73,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='SI'), 'Computación en la Nube',             'SI-CS802', '#0369A1', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='SI'), 'Proyecto de Sistemas I',             'SI-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='SI'), 'Proyecto de Sistemas II',            'SI-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  4. CIENCIA DE DATOS E IA (CDIA)        ║
 -- ╚══════════════════════════════════════════╝
@@ -85,7 +93,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='CDIA'), 'Ética en IA',                       'CDIA-HU601', '#64748B', 2, 1),
 ((SELECT id FROM carrera WHERE codigo='CDIA'), 'Proyecto de Ciencia de Datos I',    'CDIA-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='CDIA'), 'Proyecto de Ciencia de Datos II',   'CDIA-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  5. CIENCIA DE LA COMPUTACIÓN (CC)      ║
 -- ╚══════════════════════════════════════════╝
@@ -105,7 +113,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='CC'), 'Seguridad en Sistemas',         'CC-CS701', '#F43F5E', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='CC'), 'Proyecto de Investigación I',   'CC-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='CC'), 'Proyecto de Investigación II',  'CC-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  6. CIBERSEGURIDAD (CS)                 ║
 -- ╚══════════════════════════════════════════╝
@@ -121,7 +129,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='CS'), 'Seguridad en Aplicaciones Web',    'CS-SE701', '#F43F5E', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='CS'), 'Proyecto de Ciberseguridad I',     'CS-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='CS'), 'Proyecto de Ciberseguridad II',    'CS-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  7. ADMINISTRACIÓN Y NEGOCIOS (AND)     ║
 -- ╚══════════════════════════════════════════╝
@@ -140,7 +148,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='AND'), 'Derecho Empresarial',               'AND-DE601', '#64748B', 2, 1),
 ((SELECT id FROM carrera WHERE codigo='AND'), 'Proyecto Empresarial I',            'AND-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='AND'), 'Proyecto Empresarial II',           'AND-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  8. BUSINESS ANALYTICS (BA)             ║
 -- ╚══════════════════════════════════════════╝
@@ -154,7 +162,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='BA'), 'Optimización de Procesos',       'BA-OP601', '#059669', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='BA'), 'Proyecto Analytics I',           'BA-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='BA'), 'Proyecto Analytics II',          'BA-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  9. INGENIERÍA INDUSTRIAL (II)          ║
 -- ╚══════════════════════════════════════════╝
@@ -171,7 +179,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='II'), 'Economía Industrial',             'II-EC601', '#B45309', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='II'), 'Proyecto Industrial I',           'II-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='II'), 'Proyecto Industrial II',          'II-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  10. BIOINGENIERÍA (BI)                 ║
 -- ╚══════════════════════════════════════════╝
@@ -187,7 +195,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='BI'), 'Nanotecnología Biomédica',        'BI-NT601',  '#F59E0B', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='BI'), 'Proyecto Biomédico I',            'BI-PR901',  '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='BI'), 'Proyecto Biomédico II',           'BI-PR902',  '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  11. INGENIERÍA DE LA ENERGÍA (IE)      ║
 -- ╚══════════════════════════════════════════╝
@@ -203,7 +211,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='IE'), 'Gestión Energética',              'IE-GE701', '#6366F1', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IE'), 'Proyecto de Energía I',           'IE-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IE'), 'Proyecto de Energía II',          'IE-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  12. INGENIERÍA MECÁNICA (IM)           ║
 -- ╚══════════════════════════════════════════╝
@@ -220,7 +228,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='IM'), 'Elementos Finitos',               'IM-EF701', '#059669', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IM'), 'Proyecto Mecánico I',             'IM-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IM'), 'Proyecto Mecánico II',            'IM-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  13. INGENIERÍA QUÍMICA (IQ)            ║
 -- ╚══════════════════════════════════════════╝
@@ -236,7 +244,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='IQ'), 'Control de Procesos',            'IQ-CP601', '#0F766E', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IQ'), 'Proyecto Químico I',             'IQ-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IQ'), 'Proyecto Químico II',            'IQ-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  14. INGENIERÍA AMBIENTAL (IA)          ║
 -- ╚══════════════════════════════════════════╝
@@ -252,7 +260,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='IA'), 'Gestión Ambiental Empresarial',   'IA-GE701', '#6366F1', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IA'), 'Proyecto Ambiental I',            'IA-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IA'), 'Proyecto Ambiental II',           'IA-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  15. INGENIERÍA CIVIL (IC)              ║
 -- ╚══════════════════════════════════════════╝
@@ -271,7 +279,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='IC'), 'Gestión de Proyectos de Construcción', 'IC-GP701', '#6366F1', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IC'), 'Proyecto Civil I',                     'IC-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IC'), 'Proyecto Civil II',                    'IC-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  16. INGENIERÍA ELECTRÓNICA (IEL)       ║
 -- ╚══════════════════════════════════════════╝
@@ -289,7 +297,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='IEL'), 'Internet de las Cosas (IoT)',    'IEL-IT701', '#0369A1', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IEL'), 'Proyecto Electrónico I',         'IEL-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IEL'), 'Proyecto Electrónico II',        'IEL-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  17. INGENIERÍA MECATRÓNICA (IMT)       ║
 -- ╚══════════════════════════════════════════╝
@@ -307,7 +315,7 @@ INSERT IGNORE INTO curso (carrera_id, nombre, codigo, color_hex, creditos, activ
 ((SELECT id FROM carrera WHERE codigo='IMT'), 'Visión por Computadora Aplicada', 'IMT-VC701', '#0891B2', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IMT'), 'Proyecto Mecatrónico I',          'IMT-PR901', '#F0B429', 3, 1),
 ((SELECT id FROM carrera WHERE codigo='IMT'), 'Proyecto Mecatrónico II',         'IMT-PR902', '#F0B429', 3, 1);
- 
+
 -- ╔══════════════════════════════════════════╗
 -- ║  18. PROFESOR_CURSO — prueba local      ║
 -- ║  UUIDs fijos = seed del MS1             ║

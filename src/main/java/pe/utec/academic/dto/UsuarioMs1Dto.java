@@ -2,7 +2,10 @@ package pe.utec.academic.dto;
 
 import lombok.*;
 
-//Estos datos son jalados por el MS1 y solo jala los datos necesarios para alimentar la entidad ProfesorCurso
+/**
+ * Representa la respuesta de GET /usuarios/:id del MS1.
+ * Solo los campos que necesitamos para enriquecer ProfesorCurso.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

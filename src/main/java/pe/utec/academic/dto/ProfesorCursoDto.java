@@ -13,7 +13,7 @@ public class ProfesorCursoDto {
         @NotNull(message = "cursoId es requerido")
         private Integer cursoId;
 
-        @NotBlank(message = "El semestre es requerido")
+        @NotBlank(message = "El semestre es requerido (ej: 2025-1)")
         @Pattern(regexp = "^\\d{4}-(1|2)$", message = "Formato de semestre inválido. Usa: 2025-1 o 2025-2")
         private String semestre;
 
@@ -25,7 +25,7 @@ public class ProfesorCursoDto {
     public static class Response {
         private Integer id;
         private String  profesorId;
-        // Datos del profesor dado por el MS1, recuerden que un profesor sigue siendo un usuario
+        // Datos del profesor enriquecidos desde MS1
         private String  profesorNombre;
         private String  profesorApellido;
         private String  profesorFoto;
