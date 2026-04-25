@@ -1,6 +1,3 @@
-version: '3.9' #Se deberia borrar esta linea para que no salga version absoleta
-#Considerar borrarla
-
 # ================================================================
 # MS2 — ms-academic
 # Docker Compose con:
