@@ -1,0 +1,88 @@
+version: '3.9'
+
+# ================================================================
+# MS2 — ms-academic
+# Docker Compose con:
+#   - Volumen nombrado para persistencia de datos
+#   - Red interna privada (los servicios NO se exponen entre sí)
+#   - MySQL solo acepta conexiones desde la red interna Docker
+#   - ms-academic acepta conexiones del host (para Postman/DBeaver)
+# ================================================================
+
+networks:
+  academic_net:
+    driver: bridge
+    # Red interna — solo los contenedores de este compose se ven
+    internal: false   # false = el contenedor sí sale a internet (para descargar deps)
+
+services:
+
+  # ── MySQL 8 ──────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: utec_academic_db
+    restart: unless-stopped
+    networks:
+      - academic_net          # ← solo visible dentro de la red Docker
+    # NO exponemos el puerto 3306 al host en producción
+    # En local lo habilitamos para DBeaver (ver perfil dev abajo)
+    ports:
+      - "127.0.0.1:3306:3306"  # solo localhost, nunca 0.0.0.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root_utec_2025}
+      MYSQL_DATABASE:      ${DB_NAME:-academic_db}
+      MYSQL_USER:          ${DB_USER:-utec_user}
+      MYSQL_PASSWORD:      ${DB_PASS:-utec_pass_2025}
+    volumes:
+      # Volumen nombrado: los datos sobreviven a "docker compose down"
+      # Solo se pierden con "docker compose down -v"
+      - mysql_data:/var/lib/mysql
+      # Script de init: configura permisos extra al crear la BD
+      - ./mysql-init:/docker-entrypoint-initdb.d:ro
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --bind-address=0.0.0.0
+      --max_connections=200
+      --wait_timeout=600
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost",
+             "-u${DB_USER:-utec_user}", "-p${DB_PASS:-utec_pass_2025}"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+
+  # ── ms-academic (Spring Boot) ─────────────────────────────────
+  ms-academic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: utec_ms_academic
+    restart: unless-stopped
+    networks:
+      - academic_net
+    ports:
+      - "3002:3002"            # expuesto al host para Postman/frontend
+    environment:
+      # BD — usa el nombre del servicio Docker como host
+      DB_URL:  jdbc:mysql://mysql:3306/${DB_NAME:-academic_db}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+      DB_USER: ${DB_USER:-utec_user}
+      DB_PASS: ${DB_PASS:-utec_pass_2025}
+      # MS1 — en local apunta al host; en producción usar nombre del servicio
+      MS1_URL: ${MS1_URL:-http://host.docker.internal:3001}
+      SERVER_PORT: 3002
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-dev}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    extra_hosts:
+      # Permite que el contenedor llame a servicios en tu laptop
+      - "host.docker.internal:host-gateway"
+
+# ── Volumen nombrado ──────────────────────────────────────────
+volumes:
+  mysql_data:
+    driver: local
+    # Los datos quedan en: /var/lib/docker/volumes/ms-academic_mysql_data/_data
+    # Para ver dónde: docker volume inspect ms-academic_mysql_data

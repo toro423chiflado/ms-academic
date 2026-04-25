@@ -1,5 +1,5 @@
 package pe.utec.academic.controller;
- 
+
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import pe.utec.academic.dto.ProfesorCursoDto;
 import pe.utec.academic.service.ProfesorCursoService;
 import java.util.*;
- 
-// Esto consume el MS1 y sirve como base para el MS4
 
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "ProfesorCurso", description = "Asignación de profesores a cursos por semestre")
 public class ProfesorCursoController {
- 
+
     private final ProfesorCursoService profesorCursoService;
- 
-    // Lista todos los profesores de un curso
+
+    // ── GET /cursos/:id/profesores ────────────────────────────
     @GetMapping("/cursos/{cursoId}/profesores")
     @Operation(summary = "Lista todos los profesores de un curso (enriquecido con datos MS1)")
     public ResponseEntity<List<ProfesorCursoDto.Response>> listarPorCurso(
@@ -29,8 +27,8 @@ public class ProfesorCursoController {
         String bearer = request.getHeader("Authorization");
         return ResponseEntity.ok(profesorCursoService.listarPorCurso(cursoId, bearer));
     }
- 
-    // Todos los cursos activos 
+
+    // ── GET /profesores/:profesorId/cursos ────────────────────
     @GetMapping("/profesores/{profesorId}/cursos")
     @Operation(summary = "Lista todos los cursos activos de un profesor")
     public ResponseEntity<List<ProfesorCursoDto.Response>> listarPorProfesor(
@@ -39,8 +37,8 @@ public class ProfesorCursoController {
         String bearer = request.getHeader("Authorization");
         return ResponseEntity.ok(profesorCursoService.listarPorProfesor(profesorId, bearer));
     }
- 
-    // Profesor-curso por id 
+
+    // ── GET /profesor-curso/:id ───────────────────────────────
     @GetMapping("/profesor-curso/{id}")
     @Operation(summary = "Obtener asignación específica por ID (usado por MS4 para validar)")
     public ResponseEntity<ProfesorCursoDto.Response> obtener(
@@ -50,7 +48,7 @@ public class ProfesorCursoController {
         return ResponseEntity.ok(profesorCursoService.obtenerPorId(id, bearer));
     }
 
-
+    // ── GET /profesor-curso/:id/existe ────────────────────────
     // MS4 llama esto para verificar que el profesor_curso_id es válido
     // antes de registrar una calificación
     @GetMapping("/profesor-curso/{id}/existe")
@@ -59,8 +57,8 @@ public class ProfesorCursoController {
         boolean existe = profesorCursoService.existeYActivo(id);
         return ResponseEntity.ok(Map.of("existe", existe, "activo", existe));
     }
- 
-    // Crear profesor en el curso
+
+    // ── POST /profesor-curso ──────────────────────────────────
     @PostMapping("/profesor-curso")
     @Operation(summary = "Asignar profesor a curso (solo ADMIN — valida en MS1)")
     public ResponseEntity<ProfesorCursoDto.Response> asignar(
@@ -70,8 +68,8 @@ public class ProfesorCursoController {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(profesorCursoService.asignar(req, bearer));
     }
- 
-    // Eliminar profesor-curso por id 
+
+    // ── DELETE /profesor-curso/:id ────────────────────────────
     @DeleteMapping("/profesor-curso/{id}")
     @Operation(summary = "Desactivar asignación (soft delete, solo ADMIN)")
     public ResponseEntity<Void> desactivar(@PathVariable Integer id) {
